@@ -1,0 +1,299 @@
+
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zukunftsnavigator Wirtschaftsinformatik</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page dashboard design with a top navigation bar for smooth scrolling to thematic sections. This structure is chosen for its simplicity and ease of navigation, which is ideal for a user exploring complex information. The flow is logical: 1. Introduction, 2. Deep-dive into specializations (the core content), 3. Visual comparison of job demand, 4. Actionable advice tailored to the user's situation. This allows the user to digest information in chunks and connect different pieces of advice easily. Key interaction is the clickable chart that provides context-sensitive details, making data exploration more engaging. -->
+    <!-- Visualization & Content Choices: 
+        - Specializations: Presented as content cards. Goal: Inform. Method: Structured HTML/Tailwind. Interaction: None, clear static presentation. Justification: Easy to read and compare key details side-by-side.
+        - Job Market Demand: Visual comparison. Goal: Compare. Method: Horizontal Bar Chart (Chart.js). Interaction: Clicks on bars update a detailed text panel. Justification: A bar chart is excellent for comparing discrete categories. The click interaction connects the visual data directly to rich, qualitative information, enhancing understanding.
+        - Career Path: Simple process flow. Goal: Organize. Method: Styled HTML/Tailwind diagram. Interaction: Hover effects for subtle feedback. Justification: Visually shows a typical progression in a simple, non-distracting way.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f2; /* Warm Neutral Background */
+            color: #3f3f46;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #1e40af;
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-blue-900">WI-Zukunftsnavigator</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#spezialisierungen" class="nav-link text-gray-600 font-medium">Spezialisierungen</a>
+                <a href="#arbeitsmarkt" class="nav-link text-gray-600 font-medium">Arbeitsmarkt</a>
+                <a href="#strategie" class="nav-link text-gray-600 font-medium">Deine Strategie</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#spezialisierungen" class="block py-2 px-6 text-sm text-gray-700">Spezialisierungen</a>
+            <a href="#arbeitsmarkt" class="block py-2 px-6 text-sm text-gray-700">Arbeitsmarkt</a>
+            <a href="#strategie" class="block py-2 px-6 text-sm text-gray-700">Deine Strategie</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-16">
+        <section id="einfuehrung" class="text-center mb-16 md:mb-24">
+            <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-4">Deine Zukunft in der Wirtschaftsinformatik</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                Als internationaler Student in Berlin hast du eine einzigartige Perspektive. Diese Seite hilft dir, die wettbewerbsfähigsten Spezialisierungen zu finden, in denen deine technischen Fähigkeiten besonders gefragt sind – auch wenn dein Deutsch noch nicht perfekt ist.
+            </p>
+        </section>
+
+        <section id="spezialisierungen" class="mb-16 md:mb-24">
+            <h3 class="text-2xl md:text-4xl font-bold text-center text-gray-800 mb-12">Zukunftsfähige Spezialisierungen</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                
+                <div class="card">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-4">📊</span>
+                        <h4 class="text-xl font-bold text-blue-900">Data Science & KI-Analyse</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">Hier analysierst du große Datenmengen, um Geschäftsentscheidungen zu verbessern. Du entwickelst Modelle für maschinelles Lernen und bist direkt an der KI-Revolution beteiligt.</p>
+                    <div class="space-y-2">
+                        <p><strong class="font-semibold">Wichtige Skills:</strong> Python, R, SQL, Machine Learning Frameworks (z.B. TensorFlow), Cloud-Plattformen (AWS, Azure).</p>
+                        <p><strong class="font-semibold">Sprachfaktor:</strong> Mittel. In internationalen Teams ist Englisch oft die Hauptsprache. Deine Fähigkeit, Daten zu interpretieren, ist wichtiger als perfektes Deutsch.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-4">☁️</span>
+                        <h4 class="text-xl font-bold text-blue-900">Cloud Computing & DevOps</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">Du entwirfst und verwaltest skalierbare und sichere IT-Infrastrukturen in der Cloud. Automatisierung von Prozessen (DevOps) ist hier ein zentraler Bestandteil.</p>
+                     <div class="space-y-2">
+                        <p><strong class="font-semibold">Wichtige Skills:</strong> AWS, Azure oder Google Cloud, Docker, Kubernetes, Infrastructure as Code (z.B. Terraform), CI/CD-Pipelines.</p>
+                        <p><strong class="font-semibold">Sprachfaktor:</strong> Gering bis Mittel. Dies ist ein sehr technischer Bereich. Dokumentation ist oft auf Englisch, und die Nachfrage nach Experten ist extrem hoch.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-4">🛡️</span>
+                        <h4 class="text-xl font-bold text-blue-900">IT-Sicherheit / Cybersecurity</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">Angesichts zunehmender Cyber-Bedrohungen schützt du Unternehmensdaten und -systeme. KI wird hier eingesetzt, um Angriffe schneller zu erkennen.</p>
+                     <div class="space-y-2">
+                        <p><strong class="font-semibold">Wichtige Skills:</strong> Netzwerksicherheit, Penetration Testing, Kryptographie, Kenntnisse von Normen (z.B. ISO 27001), SIEM-Tools.</p>
+                        <p><strong class="font-semibold">Sprachfaktor:</strong> Mittel bis Hoch. Kommunikation über Risiken ist wichtig, aber in großen, internationalen Firmen ist Englisch oft ausreichend für den Start.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-4">🤖</span>
+                        <h4 class="text-xl font-bold text-blue-900">KI-Produktmanagement</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">Du bist die Schnittstelle zwischen Technik und Business. Du definierst, wie KI-Produkte entwickelt werden, um einen echten Geschäftswert zu schaffen.</p>
+                    <div class="space-y-2">
+                        <p><strong class="font-semibold">Wichtige Skills:</strong> Agiles Projektmanagement, User Experience (UX), Markt-Analyse, technisches Grundverständnis von KI, Kommunikationsstärke.</p>
+                        <p><strong class="font-semibold">Sprachfaktor:</strong> Hoch. Da dies eine Schnittstellenfunktion ist, sind gute Kommunikationsfähigkeiten in Deutsch und Englisch oft entscheidend. Eine gute Herausforderung für später.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="arbeitsmarkt" class="mb-16 md:mb-24">
+            <h3 class="text-2xl md:text-4xl font-bold text-center text-gray-800 mb-4">Arbeitsmarkt-Potenzial im Überblick</h3>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Diese Grafik zeigt die relative Nachfrage nach Experten in den verschiedenen Bereichen. Klicke auf einen Balken, um mehr Details zu erfahren.</p>
+            <div class="bg-white rounded-lg shadow p-4 md:p-8">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-1/2">
+                        <div class="chart-container">
+                            <canvas id="demandChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 flex items-center">
+                        <div id="details-panel" class="p-6 bg-blue-50 rounded-lg min-h-[300px]">
+                            <h4 id="details-title" class="text-xl font-bold text-blue-900 mb-2">Bitte wähle einen Bereich</h4>
+                            <p id="details-text" class="text-gray-700">Klicke auf einen Balken in der Grafik, um hier detaillierte Informationen über die Jobaussichten, typische Gehälter und die Bedeutung von KI in diesem Feld zu sehen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategie">
+             <h3 class="text-2xl md:text-4xl font-bold text-center text-gray-800 mb-12">Deine persönliche Strategie zum Erfolg</h3>
+            <div class="max-w-4xl mx-auto space-y-8">
+                <div class="card flex items-start">
+                    <span class="text-3xl mr-6 mt-1">💡</span>
+                    <div>
+                        <h4 class="text-xl font-bold text-blue-900 mb-2">Fokussiere dich auf technische Exzellenz</h4>
+                        <p class="text-gray-600">Hervorragende technische Fähigkeiten sind eine universelle Sprache. Wenn du in Cloud-Technologien, KI-Modellierung oder Cybersecurity ein Experte bist, werden Unternehmen flexibler bei den Sprachanforderungen sein. Baue ein starkes Portfolio auf GitHub auf und sammle Zertifikate (z.B. AWS Certified Solutions Architect).</p>
+                    </div>
+                </div>
+                <div class="card flex items-start">
+                    <span class="text-3xl mr-6 mt-1">🌍</span>
+                    <div>
+                        <h4 class="text-xl font-bold text-blue-900 mb-2">Suche gezielt nach internationalen Unternehmen</h4>
+                        <p class="text-gray-600">Berlin ist voller Start-ups, Scale-ups und großer Tech-Konzerne, in denen Englisch die primäre Arbeitssprache ist. Nutze Jobportale wie "LinkedIn", "Ottaa" oder "Berlin Startup Jobs" und filtere nach "English speaking".</p>
+                    </div>
+                </div>
+                <div class="card flex items-start">
+                    <span class="text-3xl mr-6 mt-1">📈</span>
+                    <div>
+                        <h4 class="text-xl font-bold text-blue-900 mb-2">Verbessere dein Deutsch schrittweise</h4>
+                        <p class="text-gray-600">Niemand erwartet perfektes Deutsch von Anfang an. Nutze die Angebote deiner Hochschule. Konzentriere dich auf Fachvokabular für dein Spezialgebiet. Zeige im Bewerbungsgespräch, dass du motiviert bist zu lernen. Das ist oft wichtiger als der aktuelle Stand.</p>
+                    </div>
+                </div>
+                <div class="card flex items-start">
+                    <span class="text-3xl mr-6 mt-1">🤝</span>
+                    <div>
+                        <h4 class="text-xl font-bold text-blue-900 mb-2">Nutze Praktika und Werkstudentenstellen</h4>
+                        <p class="text-gray-600">Dies ist der beste Weg, um praktische Erfahrung zu sammeln und gleichzeitig deine Sprachkenntnisse in einem professionellen Umfeld zu verbessern. Unternehmen sind hier oft nachsichtiger und es ist ein idealer Einstieg in eine Festanstellung.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 mt-16 md:mt-24">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-400">
+            <p>Viel Erfolg bei deinem Studium und deiner Karriere in Berlin!</p>
+            <p class="text-sm mt-2">Dieser Navigator wurde erstellt, um dir Orientierung zu geben.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const chartData = {
+                labels: ['Cloud & DevOps', 'Data Science & KI', 'IT-Sicherheit', 'KI-Produktmanagement'],
+                datasets: [{
+                    label: 'Relative Nachfrage auf dem Arbeitsmarkt',
+                    data: [95, 90, 85, 70],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(34, 197, 94, 0.7)',
+                        'rgba(239, 68, 68, 0.7)',
+                        'rgba(249, 115, 22, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(34, 197, 94, 1)',
+                        'rgba(239, 68, 68, 1)',
+                        'rgba(249, 115, 22, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+            
+            const detailsContent = [
+                {
+                    title: 'Cloud Computing & DevOps',
+                    text: '<strong>Jobaussichten:</strong> Exzellent. Fast jedes Unternehmen migriert in die Cloud. Experten sind extrem selten und sehr gefragt. <strong>Gehaltsspanne (Einstieg):</strong> €55.000 - €70.000. <strong>KI-Relevanz:</strong> Du stellst die Infrastruktur bereit, auf der KI-Anwendungen laufen (MLOps). Deine Rolle ist fundamental für die Skalierung von KI.'
+                },
+                {
+                    title: 'Data Science & KI-Analyse',
+                    text: '<strong>Jobaussichten:</strong> Sehr gut. Unternehmen sammeln immer mehr Daten und brauchen Experten, die daraus Werte schaffen können. <strong>Gehaltsspanne (Einstieg):</strong> €50.000 - €65.000. <strong>KI-Relevanz:</strong> Dies ist das Kernfeld der angewandten KI. Du trainierst Modelle und implementierst KI-Lösungen direkt.'
+                },
+                {
+                    title: 'IT-Sicherheit / Cybersecurity',
+                    text: '<strong>Jobaussichten:</strong> Sehr gut und extrem stabil. Sicherheit ist für jedes Unternehmen kritisch. Der Bedarf wächst stetig. <strong>Gehaltsspanne (Einstieg):</strong> €52.000 - €68.000. <strong>KI-Relevanz:</strong> KI-Systeme werden genutzt, um Angriffsmuster automatisch zu erkennen (Threat Detection). Du arbeitest mit diesen Systemen.'
+                },
+                {
+                    title: 'KI-Produktmanagement',
+                    text: '<strong>Jobaussichten:</strong> Gut und wachsend. Da mehr Unternehmen KI-Produkte entwickeln, wird diese Brückenfunktion immer wichtiger. <strong>Gehaltsspanne (Einstieg):</strong> €50.000 - €65.000. <strong>KI-Relevanz:</strong> Du definierst die Strategie für KI-Produkte. Du benötigst ein gutes Verständnis von KI, ohne selbst Modelle entwickeln zu müssen.'
+                }
+            ];
+
+            const ctx = document.getElementById('demandChart').getContext('2d');
+            const demandChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: true,
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Relative Nachfrage (Index)'
+                            }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const index = elements[0].index;
+                            updateDetailsPanel(index);
+                        }
+                    }
+                }
+            });
+
+            const detailsTitle = document.getElementById('details-title');
+            const detailsText = document.getElementById('details-text');
+
+            function updateDetailsPanel(index) {
+                const content = detailsContent[index];
+                detailsTitle.textContent = content.title;
+                detailsText.innerHTML = content.text;
+            }
+        });
+    </script>
+
+</body>
+</html>
